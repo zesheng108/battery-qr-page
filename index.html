@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电池合规信息 · 扫码落地页</title>
+<style>
+:root{--bg:#f5f7f9;--surface:#fff;--border:#dfe4ea;--text:#1f2933;--muted:#66717d;--blue:#185fa5;--blue-bg:#e6f1fb;--teal:#0f6e56;--teal-bg:#e1f5ee;--amber:#854f0b;--amber-bg:#faeeda;--red:#a32d2d;--red-bg:#fcebeb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.65;font-size:14px}
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:38px;height:38px;border-radius:8px;background:var(--blue-bg);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px}
+.brand b{display:block;font-size:15px}
+.brand small{display:block;color:var(--muted);font-size:12px}
+.pill{display:inline-block;font-size:12px;border-radius:999px;padding:3px 10px;background:var(--teal-bg);color:var(--teal);margin-right:6px}
+.pill.blue{background:var(--blue-bg);color:var(--blue)}
+.pill.amber{background:var(--amber-bg);color:var(--amber)}
+.pill.red{background:var(--red-bg);color:var(--red)}
+main{max-width:900px;margin:0 auto;padding:24px 20px 48px}
+.notice{background:var(--amber-bg);color:var(--amber);border:1px solid #efc98a;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:18px}
+.error{background:var(--red-bg);color:var(--red);border:1px solid #e9a7a7;border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:18px}
+.card,.idcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.idcard{padding:20px}
+.idmain{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.idmain small{display:block;color:var(--muted);font-size:12px}
+.idmain strong{font-size:18px}
+h2{font-size:15px;margin:0 0 4px;font-weight:600;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h2 span{font-size:12px;color:var(--muted);font-weight:400}
+.sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px 24px;margin:0}
+.dl dt{color:var(--muted);font-size:12px}
+.dl dd{margin:0;font-weight:500;word-break:break-word}
+.hl{background:#fff6e5;border:1px dashed #e0a94a;border-radius:6px;padding:6px 8px}
+.rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.row{border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:#fbfcfd}
+.row b{display:block;font-size:13px}
+.row span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+ul.tight{margin:6px 0 0;padding-left:20px}
+ul.tight li{margin-bottom:5px}
+.doc{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid var(--border);border-radius:8px;padding:10px 12px;flex-wrap:wrap}
+.doc b{font-size:13px}
+.doc span{font-size:12px;color:var(--muted)}
+.link{color:var(--blue);font-size:13px;text-decoration:none}
+.urlbox{background:#f3f5f7;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:Consolas,Monaco,monospace;font-size:12px;word-break:break-all;color:var(--text)}
+footer{max-width:900px;margin:0 auto;padding:0 20px 32px;color:var(--muted);font-size:12px}
+footer a{color:var(--blue)}
+[hidden]{display:none !important}
+@media(max-width:600px){main{padding:18px 14px 36px}.card,.idcard{padding:16px}.idmain strong{font-size:16px}}
+</style>
+</head>
+<body>
+<header>
+<div class="brand"><span class="logo">EU</span><div><b>电池合规信息</b><small>Regulation (EU) 2023/1542 · 非护照类 / 一次性便携式电池</small></div></div>
+<div class="pill blue">扫码信息页 · 示例数据</div>
+</header>
+
+<main>
+<div class="notice">这是可部署的页面模板。当前显示的是示例数据；上线前请把 BATCH_DATA 中的字段替换为真实批次数据，并按销售成员国补充语言版本。</div>
+<div class="error" id="errorBox" hidden>未找到该批次的数据，请联系制造商。</div>
+
+<section class="idcard">
+<div class="idmain">
+<div><small>品牌 / 型号 / 批次</small><strong id="headTitle">--</strong></div>
+<span class="pill">一次性电池 · 不可充电</span><span class="pill blue" id="versionPill">数据版本 --</span>
+</div>
+<dl class="dl">
+<div><dt>制造商</dt><dd id="fManufacturer">--</dd></div>
+<div><dt>生产工厂地理位置</dt><dd id="fPlant">--</dd></div>
+<div><dt>生产日期（月/年） · 须与包装一致</dt><dd class="hl" id="fMonth">--</dd></div>
+<div><dt>批次号</dt><dd id="fLot">--</dd></div>
+<div><dt>重量</dt><dd id="fWeight">--</dd></div>
+<div><dt>额定容量</dt><dd id="fCapacity">--</dd></div>
+<div><dt>化学体系</dt><dd id="fChemistry">--</dd></div>
+<div><dt>页面最近更新</dt><dd id="fUpdated">--</dd></div>
+</dl>
+</section>
+
+<section class="card">
+<h2>01 一般标签信息 <span>附件 VI Part A · 第 13(1) 条</span></h2>
+<p class="sub">本页信息以文字呈现，可检索、可复制，不以图片代替法定信息。</p>
+<div class="rows" id="generalRows"></div>
+</section>
+
+<section class="card">
+<h2>02 不可充电标识与最小平均使用时长 <span>第 13(3) 条</span></h2>
+<p class="sub">非充电便携式电池必须标注“不可充电”，并标明在特定应用中的最小平均使用时长。</p>
+<div class="rows">
+<div class="row"><b>不可充电</b><span>Non-rechargeable / 不可充电；标签警示含“Do not recharge”</span></div>
+<div class="row"><b>最小平均使用时长</b><span id="fDuration">--</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2>03 分类收集符号与重金属 <span>第 13(4)(5) 条</span></h2>
+<div class="rows">
+<div class="row"><b>分类收集符号</b><span>打叉垃圾桶；表示电池须单独收集，不得混入生活垃圾</span></div>
+<div class="row"><b>Cd / Pb 符号</b><span id="fHeavyMetal">--</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2>04 EU 符合性声明 <span>第 18 条 · 可下载</span></h2>
+<div class="doc">
+<div><b>EU Declaration of Conformity</b><span id="fDoc">--</span></div>
+<a class="link" href="#" onclick="return false" id="docLink">查看 / 下载 PDF</a>
+</div>
+</section>
+
+<section class="card">
+<h2>05 尽职调查报告 <span>第 52(3) 条 · 适用时</span></h2>
+<p class="sub" id="fDueDiligence">--</p>
+</section>
+
+<section class="card">
+<h2>06 废弃电池预防与管理 <span>第 74(1)(a)–(f) 条 · 按销售国语言</span></h2>
+<ul class="tight" id="wasteList"></ul>
+</section>
+
+<section class="card">
+<h2>07 版本、责任主体与网址 <span>信息须完整、最新、准确</span></h2>
+<dl class="dl">
+<div><dt>责任经济运营商</dt><dd id="fOperator">--</dd></div>
+<div><dt>合规联系人</dt><dd id="fContact">--</dd></div>
+<div><dt>语言</dt><dd id="fLang">--</dd></div>
+</dl>
+<p class="sub" style="margin-top:14px">当前二维码指向的网址：</p>
+<div class="urlbox" id="currentUrl">--</div>
+</section>
+</main>
+
+<footer>
+<p><b>法规依据：</b>Regulation (EU) 2023/1542 第 13(1)–(7) 条、附件 VI Part A/B/C、第 18 条、第 52(3) 条、第 74(1) 条。本页为非护照类便携式电池二维码落地页，不含电池护照内容。</p>
+</footer>
+
+<script>
+const BATCH_DATA = {
+  "2611-B2": {
+    brand: "Huideryi",
+    model: "CR123A 3V",
+    plant: "中国广东惠州 · 惠德瑞锂电工厂",
+    production_month: "2026-11",
+    lot: "2611-B2",
+    manufacturer: "惠州市惠德瑞锂电科技股份有限公司",
+    operator: "惠州市惠德瑞锂电科技股份有限公司",
+    weight: "16 g（示例，请按实测填写）",
+    capacity: "1500 mAh（示例，请按型号填写）",
+    chemistry: "Li-MnO2 锂二氧化锰（示例，请确认）",
+    hazardous: "除 Hg/Cd/Pb 外不适用（请按检测报告确认）",
+    extinguisher: "不适用 / 干粉（请按 SDS 确认）",
+    crm: "不适用（请按成分表确认）",
+    duration: "烟雾报警器：约 12 个月（示例，请按实测填写）",
+    heavyMetal: "低于阈值，未标注 Cd/Pb（请按检测报告确认）",
+    doc: "编号 DoC-2026-1107 · 签发 2026-11-07 · 请上传真实 PDF",
+    dueDiligence: "本企业营业额低于 4,000 万欧元且不属大型集团，第 VII 章不适用（请按实际情况确认）。",
+    contact: "compliance@example.com",
+    lang: "中文 / EN / 按销售国补充（DE/FR 等）",
+    version: "v1.0",
+    updated: "2026-11-26"
+  },
+  "2612-B1": {
+    brand: "Huideryi",
+    model: "CR123A 3V",
+    plant: "中国广东惠州 · 惠德瑞锂电工厂",
+    production_month: "2026-12",
+    lot: "2612-B1",
+    manufacturer: "惠州市惠德瑞锂电科技股份有限公司",
+    operator: "惠州市惠德瑞锂电科技股份有限公司",
+    weight: "16 g（示例，请按实测填写）",
+    capacity: "1500 mAh（示例，请按型号填写）",
+    chemistry: "Li-MnO2 锂二氧化锰（示例，请确认）",
+    hazardous: "除 Hg/Cd/Pb 外不适用（请按检测报告确认）",
+    extinguisher: "不适用 / 干粉（请按 SDS 确认）",
+    crm: "不适用（请按成分表确认）",
+    duration: "烟雾报警器：约 12 个月（示例，请按实测填写）",
+    heavyMetal: "低于阈值，未标注 Cd/Pb（请按检测报告确认）",
+    doc: "编号 DoC-2026-1201 · 签发 2026-12-01 · 请上传真实 PDF",
+    dueDiligence: "本企业营业额低于 4,000 万欧元且不属大型集团，第 VII 章不适用（请按实际情况确认）。",
+    contact: "compliance@example.com",
+    lang: "中文 / EN / 按销售国补充（DE/FR 等）",
+    version: "v1.0",
+    updated: "2026-12-01"
+  },
+  "2611-C1": {
+    brand: "BrandB",
+    model: "CR123A 3V",
+    plant: "中国广东惠州 · 惠德瑞锂电工厂",
+    production_month: "2026-11",
+    lot: "2611-C1",
+    manufacturer: "惠州市惠德瑞锂电科技股份有限公司",
+    operator: "BrandB 品牌责任主体（请填写实际法人）",
+    weight: "16 g（示例，请按实测填写）",
+    capacity: "1500 mAh（示例，请按型号填写）",
+    chemistry: "Li-MnO2 锂二氧化锰（示例，请确认）",
+    hazardous: "除 Hg/Cd/Pb 外不适用（请按检测报告确认）",
+    extinguisher: "不适用 / 干粉（请按 SDS 确认）",
+    crm: "不适用（请按成分表确认）",
+    duration: "烟雾报警器：约 12 个月（示例，请按实测填写）",
+    heavyMetal: "低于阈值，未标注 Cd/Pb（请按检测报告确认）",
+    doc: "编号 DoC-2026-1108 · 签发 2026-11-08 · 请上传真实 PDF",
+    dueDiligence: "请按该品牌责任主体的实际营业额与集团情况确认适用性。",
+    contact: "compliance@example.com",
+    lang: "中文 / EN / 按销售国补充（DE/FR 等）",
+    version: "v1.0",
+    updated: "2026-11-26"
+  }
+};
+
+const WASTE_ITEMS = [
+  "(a) 延长寿命与再用：按说明书使用，避免高温、混用新旧电池，可重复利用的应优先再用。",
+  "(b) 分类收集义务：废电池不得混入生活垃圾，终端用户应将其单独收集。",
+  "(c) 回收体系：销售点回收、公共收集点及有资质的处理渠道（按销售国填写具体网点）。",
+  "(d) 安全说明：防短路、防拆解、防加热与焚烧；含锂电池的特殊风险与处置要求。",
+  "(e) 标签符号含义：解释打叉垃圾桶、极性符号、CE 等标识。",
+  "(f) 物质影响：说明有害物质对环境、人体健康及不当丢弃的影响。"
+];
+
+function getParam(name) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
+}
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value || "--";
+}
+
+function render() {
+  const lot = getParam("lot") || Object.keys(BATCH_DATA)[0];
+  const data = BATCH_DATA[lot];
+  const errorBox = document.getElementById("errorBox");
+
+  if (!data) {
+    errorBox.hidden = false;
+    return;
+  }
+  errorBox.hidden = true;
+
+  setText("headTitle", data.brand + " / " + data.model + " / " + data.lot);
+  setText("versionPill", "数据版本 " + data.version);
+  setText("fManufacturer", data.manufacturer);
+  setText("fPlant", data.plant);
+  setText("fMonth", data.production_month + "（月/年，与包装一致）");
+  setText("fLot", data.lot);
+  setText("fWeight", data.weight);
+  setText("fCapacity", data.capacity);
+  setText("fChemistry", data.chemistry);
+  setText("fUpdated", data.updated);
+  setText("fDuration", data.duration);
+  setText("fHeavyMetal", data.heavyMetal);
+  setText("fDoc", data.doc);
+  setText("fDueDiligence", data.dueDiligence);
+  setText("fOperator", data.operator);
+  setText("fContact", data.contact);
+  setText("fLang", data.lang);
+  setText("currentUrl", window.location.href);
+
+  const general = [
+    ["制造商识别", data.manufacturer],
+    ["类别与型号识别", "便携式电池 / " + data.model + " / 批次 " + data.lot],
+    ["生产地", data.plant],
+    ["生产日期", data.production_month + "（月/年）"],
+    ["重量", data.weight],
+    ["容量", data.capacity],
+    ["化学体系", data.chemistry],
+    ["危险物质", data.hazardous],
+    ["可用灭火剂", data.extinguisher],
+    ["关键原材料", data.crm]
+  ];
+  document.getElementById("generalRows").innerHTML = general.map(function(item) {
+    return '<div class="row"><b>' + item[0] + '</b><span>' + item[1] + '</span></div>';
+  }).join("");
+
+  document.getElementById("wasteList").innerHTML = WASTE_ITEMS.map(function(item) {
+    return "<li>" + item + "</li>";
+  }).join("");
+}
+
+render();
+</script>
+</body>
+</html>
